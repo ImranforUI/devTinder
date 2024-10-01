@@ -1,5 +1,5 @@
 const express = require("express");
-const { adminAuth, userAuth } = require("./middlewares/auth");
+// const { adminAuth, userAuth } = require("./middlewares/auth");
 
 const app = express();
 
@@ -46,19 +46,46 @@ const app = express();
 //   }
 // );
 
-app.use('/admin', adminAuth);
 
-app.get('/admin/getAllData', (req, res) => {
-    res.send("Admin Data Sent");
+// Writing Auth Middlewares
+
+// app.use('/admin', adminAuth);
+
+// app.get('/admin/getAllData', (req, res) => {
+//     res.send("Admin Data Sent");
+// })
+
+// app.get('/user/data', userAuth, (req, res) => {
+//     res.send("User Data Sent")
+// })
+
+// app.post('/user/login', (req, res) => {
+//     res.send("User Logged in Successfully");
+// })
+
+
+// Error Handling
+app.use('/', (err, req, res, next) => {
+    if(err){
+        res.status(500).send("Something went wrong!");
+    }
 })
 
-app.get('/user/data', userAuth, (req, res) => {
-    res.send("User Data Sent")
+app.use('/getUserData', (req, res) => {
+    // try {
+        throw new Error("dfsdfadsf");
+        res.send("User data sent");
+    // } catch (error) {
+        // res.status(500).send("Some error occured contact support team")
+    // }
+});
+app.use('/', (err, req, res, next) => {
+    if(err){
+        res.status(500).send("Something went wrong!");
+    }
 })
 
-app.post('/user/login', (req, res) => {
-    res.send("User Logged in Successfully");
-})
+
 
 app.listen(7777, () => {
   console.log("Server is running successfully on the port 7777...");
