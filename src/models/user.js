@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 const userSchema = mongoose.Schema(
   {
-    firstName: { type: String, maxLength: 50, minLenght: 4 },
+    firstName: { type: String, required : true, maxLength: 50, minLenght: 4 },
     lastName: { type: String },
     emailId: {
       type: String,
@@ -18,7 +18,7 @@ const userSchema = mongoose.Schema(
           throw new Error("Invalid email address!");
         }
       },
-    },
+    }, 
     password: {
       type: String,
       required: true,
@@ -31,11 +31,15 @@ const userSchema = mongoose.Schema(
     age: { type: Number, min: 18 },
     gender: {
       type: String,
-      validate(value) {
-        if (!["male", "female", "others"].includes(value)) {
-          throw new Error("Gender data is not valid");
-        }
+      enum : {
+        values : ['male', 'female', 'other'],
+        message :  `{VALUE} is not a valid gender type`
       },
+      // validate(value) {
+      //   if (!["male", "female", "others"].includes(value)) {
+      //     throw new Error("Gender data is not valid");
+      //   }
+      // },
     },
     photoUrl: {
       type: String,
